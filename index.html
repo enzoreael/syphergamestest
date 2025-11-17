@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sypher.Education - Online Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A6CF7;
+            --secondary: #6c757d;
+            --light: #f8f9fa;
+            --dark: #1d2144;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --white: #ffffff;
+            --gray: #6c757d;
+            --gray-dark: #343a40;
+            --font-family-sans-serif: "Open Sans", sans-serif;
+            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Jost", sans-serif;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            color: var(--dark);
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            color: var(--white);
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            color: var(--white);
+            background-color: #3556e9;
+            border-color: #2a4ad5;
+        }
+
+        .btn-secondary {
+            color: var(--white);
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            color: var(--white);
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .bg-dark {
+            background-color: var(--dark) !important;
+        }
+
+        .bg-primary {
+            background-color: var(--primary) !important;
+        }
+
+        .bg-success {
+            background-color: var(--success) !important;
+        }
+
+        .bg-warning {
+            background-color: var(--warning) !important;
+        }
+
+        .bg-white {
+            background-color: var(--white) !important;
+        }
+
+        .bg-light {
+            background-color: var(--light) !important;
+        }
+
+        .bg-image {
+            background: linear-gradient(rgba(29, 33, 68, 0.7), rgba(29, 33, 68, 0.7));
+            background-size: cover;
+            background-position: center;
+        }
+
+        .text-white {
+            color: var(--white) !important;
+        }
+
+        .text-primary {
+            color: var(--primary) !important;
+        }
+
+        .text-uppercase {
+            text-transform: uppercase !important;
+        }
+
+        .position-relative {
+            position: relative !important;
+        }
+
+        .position-absolute {
+            position: absolute !important;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+
+        .d-flex {
+            display: flex !important;
+        }
+
+        .d-inline-flex {
+            display: inline-flex !important;
+        }
+
+        .d-block {
+            display: block !important;
+        }
+
+        .d-inline-block {
+            display: inline-block !important;
+        }
+
+        .align-items-center {
+            align-items: center !important;
+        }
+
+        .justify-content-center {
+            justify-content: center !important;
+        }
+
+        .justify-content-between {
+            justify-content: space-between !important;
+        }
+
+        .justify-content-start {
+            justify-content: flex-start !important;
+        }
+
+        .flex-column {
+            flex-direction: column !important;
+        }
+
+        .flex-shrink-0 {
+            flex-shrink: 0 !important;
+        }
+
+        .w-100 {
+            width: 100% !important;
+        }
+
+        .h-100 {
+            height: 100% !important;
+        }
+
+        .mt-0 { margin-top: 0 !important; }
+        .mt-1 { margin-top: 0.25rem !important; }
+        .mt-2 { margin-top: 0.5rem !important; }
+        .mt-3 { margin-top: 1rem !important; }
+        .mt-4 { margin-top: 1.5rem !important; }
+        .mt-5 { margin-top: 3rem !important; }
+        .mt-n1 { margin-top: -0.25rem !important; }
+        .mt-n2 { margin-top: -0.5rem !important; }
+
+        .mb-0 { margin-bottom: 0 !important; }
+        .mb-1 { margin-bottom: 0.25rem !important; }
+        .mb-2 { margin-bottom: 0.5rem !important; }
+        .mb-3 { margin-bottom: 1rem !important; }
+        .mb-4 { margin-bottom: 1.5rem !important; }
+        .mb-5 { margin-bottom: 3rem !important; }
+
+        .ml-0 { margin-left: 0 !important; }
+        .ml-1 { margin-left: 0.25rem !important; }
+        .ml-2 { margin-left: 0.5rem !important; }
+        .ml-3 { margin-left: 1rem !important; }
+        .ml-4 { margin-left: 1.5rem !important; }
+
+        .mr-0 { margin-right: 0 !important; }
+        .mr-1 { margin-right: 0.25rem !important; }
+        .mr-2 { margin-right: 0.5rem !important; }
+        .mr-3 { margin-right: 1rem !important; }
+        .mr-4 { margin-right: 1.5rem !important; }
+
+        .mx-0 { margin-left: 0 !important; margin-right: 0 !important; }
+        .mx-auto { margin-left: auto !important; margin-right: auto !important; }
+
+        .my-0 { margin-top: 0 !important; margin-bottom: 0 !important; }
+        .my-1 { margin-top: 0.25rem !important; margin-bottom: 0.25rem !important; }
+        .my-2 { margin-top: 0.5rem !important; margin-bottom: 0.5rem !important; }
+        .my-3 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+        .my-4 { margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; }
+        .my-5 { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+
+        .p-0 { padding: 0 !important; }
+        .p-1 { padding: 0.25rem !important; }
+        .p-2 { padding: 0.5rem !important; }
+        .p-3 { padding: 1rem !important; }
+        .p-4 { padding: 1.5rem !important; }
+        .p-5 { padding: 3rem !important; }
+
+        .px-0 { padding-left: 0 !important; padding-right: 0 !important; }
+        .px-1 { padding-left: 0.25rem !important; padding-right: 0.25rem !important; }
+        .px-2 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+        .px-3 { padding-left: 1rem !important; padding-right: 1rem !important; }
+        .px-4 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+        .px-5 { padding-left: 3rem !important; padding-right: 3rem !important; }
+
+        .py-0 { padding-top: 0 !important; padding-bottom: 0 !important; }
+        .py-1 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+        .py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+        .py-3 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+        .py-4 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+        .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 576px) {
+            .container {
+                max-width: 540px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+
+        .container-fluid {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, 
+        .col, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, 
+        .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, 
+        .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, 
+        .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
+            position: relative;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .col-3 { flex: 0 0 25%; max-width: 25%; }
+        .col-6 { flex: 0 0 50%; max-width: 50%; }
+        .col-12 { flex: 0 0 100%; max-width: 100%; }
+
+        @media (min-width: 576px) {
+            .col-sm-6 { flex: 0 0 50%; max-width: 50%; }
+        }
+
+        @media (min-width: 768px) {
+            .col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+            .col-md-6 { flex: 0 0 50%; max-width: 50%; }
+        }
+
+        @media (min-width: 992px) {
+            .col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+            .col-lg-5 { flex: 0 0 41.666667%; max-width: 41.666667%; }
+            .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+            .col-lg-7 { flex: 0 0 58.333333%; max-width: 58.333333%; }
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: calc(1.5em + 0.75rem + 2px);
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -5px;
+            margin-left: 5px;
+        }
+
+        .form-row > .col {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .input-group-prepend {
+            display: flex;
+        }
+
+        .input-group-append {
+            display: flex;
+        }
+
+        .input-group > .form-control {
+            position: relative;
+            flex: 1 1 auto;
+            width: 1%;
+            margin-bottom: 0;
+        }
+
+        .input-group > .input-group-prepend > .btn {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .input-group > .input-group-append > .btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .dropdown-toggle::after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 10rem;
+            padding: 0.5rem 0;
+            margin: 0.125rem 0 0;
+            font-size: 1rem;
+            color: #212529;
+            text-align: left;
+            list-style: none;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 0.25rem;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.25rem 1.5rem;
+            clear: both;
+            font-weight: 400;
+            color: #212529;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .dropdown-item:hover {
+            color: #16181b;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand {
+            display: inline-block;
+            padding-top: 0.3125rem;
+            padding-bottom: 0.3125rem;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+            line-height: inherit;
+            white-space: nowrap;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: column;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+
+        .navbar-collapse {
+            flex-basis: 100%;
+            flex-grow: 1;
+            align-items: center;
+        }
+
+        .navbar-toggler {
+            padding: 0.25rem 0.75rem;
+            font-size: 1.25rem;
+            line-height: 1;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+        }
+
+        .nav-item {
+            margin-bottom: 0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+        }
+
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .jumbotron {
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+            background-color: #e9ecef;
+            border-radius: 0.3rem;
+        }
+
+        .jumbotron-fluid {
+            padding-right: 0;
+            padding-left: 0;
+            border-radius: 0;
+        }
+
+        .overlay-bottom {
+            position: relative;
+            z-index: 1;
+        }
+
+        .overlay-bottom::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 30%;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h6 {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .section-title h6::after {
+            position: absolute;
+            content: "";
+            width: 50px;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--primary);
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+        }
+
+        .border-top {
+            border-top: 1px solid #dee2e6 !important;
+        }
+
+        .border-light {
+            border-color: #f8f9fa !important;
+        }
+
+        .rounded-0 {
+            border-radius: 0 !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        .text-right {
+            text-align: right !important;
+        }
+
+        .small {
+            font-size: 80%;
+            font-weight: 400;
+        }
+
+        .object-fit-cover {
+            object-fit: cover;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        /* Custom components */
+        .navbar-light .navbar-nav .nav-link {
+            color: var(--dark);
+            font-weight: 600;
+            padding: 20px 15px;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover,
+        .navbar-light .navbar-nav .nav-link.active {
+            color: var(--primary);
+        }
+
+        .navbar-light .navbar-toggler {
+            border: none;
+            color: var(--dark);
+        }
+
+        .jumbotron.jumbotron-fluid {
+            background: linear-gradient(rgba(29, 33, 68, 0.7), rgba(29, 33, 68, 0.7)), url('https://images.unsplash.com/photo-1522881193457-37ae97c905bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .courses-item {
+            transition: 0.5s;
+            overflow: hidden;
+        }
+
+        .courses-item:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .courses-text {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            transition: 0.5s;
+        }
+
+        .courses-item:hover .courses-text {
+            bottom: 0;
+        }
+
+        .team-item {
+            transition: 0.5s;
+            overflow: hidden;
+        }
+
+        .team-item:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-social {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.5s;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .team-item:hover .team-social {
+            opacity: 1;
+        }
+
+        .team-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 40px;
+            margin: 0 3px;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(100%);
+            transition: 0.5s;
+        }
+
+        .team-item:hover .team-social a {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .team-social a:hover {
+            background: var(--dark);
+        }
+
+        .team-social a:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .team-social a:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .team-social a:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .team-social a:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .contact-form .form-control {
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid #ced4da;
+            padding-left: 0;
+        }
+
+        .contact-form .form-control:focus {
+            box-shadow: none;
+            border-color: var(--primary);
+        }
+
+        .back-to-top {
+            position: fixed;
+            display: none;
+            right: 30px;
+            bottom: 30px;
+            z-index: 99;
+        }
+
+        /* Responsive */
+        @media (max-width: 991.98px) {
+            .navbar-light .navbar-nav .nav-link {
+                padding: 10px 15px;
+            }
+
+            .navbar-collapse {
+                margin-top: 15px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav {
+                flex-direction: row;
+            }
+
+            .navbar-expand-lg .navbar-nav .nav-link {
+                padding-right: 1rem;
+                padding-left: 1rem;
+            }
+
+            .d-lg-block {
+                display: block !important;
+            }
+
+            .d-lg-none {
+                display: none !important;
+            }
+        }
+
+        /* Owl Carousel Fixes */
+        .owl-carousel {
+            position: relative;
+        }
+
+        .owl-item {
+            display: flex;
+            justify-content: center;
+        }
+
+        .courses-carousel .owl-stage,
+        .team-carousel .owl-stage,
+        .testimonial-carousel .owl-stage {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .courses-carousel .courses-item,
+        .team-carousel .team-item,
+        .testimonial-carousel .testimonial-item {
+            display: flex;
+            flex-direction: column;
+            margin: 15px;
+        }
+
+        /* Placeholder images */
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .img-placeholder {
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Counter animation */
+        .counter-up {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Custom images */
+        .edu-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: bold;
+        }
+        
+        .testimonial-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .course-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .team-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+        
+        .feature-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark">
+        <div class="row py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center text-white">
+                    <small><i class="fa fa-phone-alt mr-2"></i>+1 234 567 8900</small>
+                    <small class="px-3">|</small>
+                    <small><i class="fa fa-envelope mr-2"></i>info@sypher.education</small>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid p-0">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
+            <a href="index.html" class="navbar-brand ml-lg-3">
+                <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-graduation-cap mr-3"></i>Sypher.Education</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
+                <div class="navbar-nav mx-auto py-0">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="#about" class="nav-item nav-link">About</a>
+                    <a href="#courses" class="nav-item nav-link">Courses</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="#feature" class="dropdown-item">Our Features</a>
+                            <a href="#team" class="dropdown-item">Instructors</a>
+                            <a href="#testimonial" class="dropdown-item">Testimonial</a>
+                        </div>
+                    </div>
+                    <a href="#contact" class="nav-item nav-link">Contact</a>
+                </div>
+                <a href="" class="btn btn-primary py-2 px-4 d-none d-lg-block">Join Us</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Header Start -->
+    <div class="jumbotron jumbotron-fluid position-relative overlay-bottom" style="margin-bottom: 90px;">
+        <div class="container text-center my-5 py-5">
+            <h1 class="text-white mt-4 mb-4">Learn From Home</h1>
+            <h1 class="text-white display-1 mb-5">Education Courses</h1>
+            <div class="mx-auto mb-5" style="width: 100%; max-width: 600px;">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-light bg-white text-body px-4 dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Courses</button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Web Development</a>
+                            <a class="dropdown-item" href="#">Data Science</a>
+                            <a class="dropdown-item" href="#">Business</a>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control border-light" style="padding: 30px 25px;" placeholder="Keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary px-4 px-lg-5">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- About Start -->
+    <div id="about" class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid w-100 h-100" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Students learning together" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="section-title position-relative mb-4">
+                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">About Us</h6>
+                        <h1 class="display-4">First Choice For Online Education Anywhere</h1>
+                    </div>
+                    <p>At Sypher.Education, we believe that education should be accessible to everyone, everywhere. Our platform offers high-quality courses taught by industry experts to help you advance your career, learn new skills, or explore new interests. With our user-friendly interface and comprehensive curriculum, we make online learning engaging and effective.</p>
+                    <div class="row pt-3 mx-0">
+                        <div class="col-3 px-0">
+                            <div class="bg-success text-center p-4">
+                                <h1 class="text-white counter-up">123</h1>
+                                <h6 class="text-uppercase text-white">Available<span class="d-block">Subjects</span></h6>
+                            </div>
+                        </div>
+                        <div class="col-3 px-0">
+                            <div class="bg-primary text-center p-4">
+                                <h1 class="text-white counter-up">1234</h1>
+                                <h6 class="text-uppercase text-white">Online<span class="d-block">Courses</span></h6>
+                            </div>
+                        </div>
+                        <div class="col-3 px-0">
+                            <div class="bg-secondary text-center p-4">
+                                <h1 class="text-white counter-up">123</h1>
+                                <h6 class="text-uppercase text-white">Skilled<span class="d-block">Instructors</span></h6>
+                            </div>
+                        </div>
+                        <div class="col-3 px-0">
+                            <div class="bg-warning text-center p-4">
+                                <h1 class="text-white counter-up">1234</h1>
+                                <h6 class="text-uppercase text-white">Happy<span class="d-block">Students</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Feature Start -->
+    <div id="feature" class="container-fluid bg-image" style="margin: 90px 0; background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 my-5 pt-5 pb-lg-5">
+                    <div class="section-title position-relative mb-4">
+                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Why Choose Us?</h6>
+                        <h1 class="display-4 text-white">Why You Should Start Learning with Us?</h1>
+                    </div>
+                    <p class="mb-4 pb-2 text-white">We provide the best online learning experience with our cutting-edge platform, expert instructors, and comprehensive curriculum. Our courses are designed to help you achieve your goals, whether you're looking to advance your career or explore new interests.</p>
+                    <div class="d-flex mb-3">
+                        <div class="btn-icon bg-primary mr-4">
+                            <i class="fa fa-2x fa-graduation-cap text-white"></i>
+                        </div>
+                        <div class="mt-n1 text-white">
+                            <h4 class="text-white">Skilled Instructors</h4>
+                            <p>Learn from industry experts with years of experience in their fields. Our instructors are passionate about teaching and dedicated to your success.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <div class="btn-icon bg-secondary mr-4">
+                            <i class="fa fa-2x fa-certificate text-white"></i>
+                        </div>
+                        <div class="mt-n1 text-white">
+                            <h4 class="text-white">International Certificate</h4>
+                            <p>Earn recognized certificates that demonstrate your skills and knowledge to employers around the world.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="btn-icon bg-warning mr-4">
+                            <i class="fa fa-2x fa-book-reader text-white"></i>
+                        </div>
+                        <div class="mt-n1 text-white">
+                            <h4 class="text-white">Online Classes</h4>
+                            <p class="m-0">Access your courses anytime, anywhere. Learn at your own pace with our flexible online platform.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="feature-img position-absolute w-100 h-100" src="https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Interactive Learning">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feature Start -->
+
+    <!-- Courses Start -->
+    <div id="courses" class="container-fluid px-0 py-5">
+        <div class="row mx-0 justify-content-center pt-5">
+            <div class="col-lg-6">
+                <div class="section-title text-center position-relative mb-4">
+                    <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Our Courses</h6>
+                    <h1 class="display-4">Checkout New Releases Of Our Courses</h1>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel courses-carousel">
+            <div class="courses-item position-relative">
+                <img class="course-img img-fluid" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Web Development Course">
+                <div class="courses-text">
+                    <h4 class="text-center text-white px-3">Web design & development courses for beginners</h4>
+                    <div class="border-top w-100 mt-3">
+                        <div class="d-flex justify-content-between p-4">
+                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jhon Doe</span>
+                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.5 <small>(250)</small></span>
+                        </div>
+                    </div>
+                    <div class="w-100 bg-white text-center p-4" >
+                        <a class="btn btn-primary" href="#">Course Detail</a>
+                    </div>
+                </div>
+            </div>
+            <div class="courses-item position-relative">
+                <img class="course-img img-fluid" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Data Science Course">
+                <div class="courses-text">
+                    <h4 class="text-center text-white px-3">Data Science & Machine Learning Fundamentals</h4>
+                    <div class="border-top w-100 mt-3">
+                        <div class="d-flex justify-content-between p-4">
+                            <span class="text-white"><i class="fa fa-user mr-2"></i>Jane Smith</span>
+                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.7 <small>(180)</small></span>
+                        </div>
+                    </div>
+                    <div class="w-100 bg-white text-center p-4" >
+                        <a class="btn btn-primary" href="#">Course Detail</a>
+                    </div>
+                </div>
+            </div>
+            <div class="courses-item position-relative">
+                <img class="course-img img-fluid" src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Business Course">
+                <div class="courses-text">
+                    <h4 class="text-center text-white px-3">Business Administration & Management</h4>
+                    <div class="border-top w-100 mt-3">
+                        <div class="d-flex justify-content-between p-4">
+                            <span class="text-white"><i class="fa fa-user mr-2"></i>Robert Johnson</span>
+                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.8 <small>(320)</small></span>
+                        </div>
+                    </div>
+                    <div class="w-100 bg-white text-center p-4" >
+                        <a class="btn btn-primary" href="#">Course Detail</a>
+                    </div>
+                </div>
+            </div>
+            <div class="courses-item position-relative">
+                <img class="course-img img-fluid" src="https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Graphic Design Course">
+                <div class="courses-text">
+                    <h4 class="text-center text-white px-3">Graphic Design & Multimedia Arts</h4>
+                    <div class="border-top w-100 mt-3">
+                        <div class="d-flex justify-content-between p-4">
+                            <span class="text-white"><i class="fa fa-user mr-2"></i>Sarah Williams</span>
+                            <span class="text-white"><i class="fa fa-star mr-2"></i>4.6 <small>(210)</small></span>
+                        </div>
+                    </div>
+                    <div class="w-100 bg-white text-center p-4" >
+                        <a class="btn btn-primary" href="#">Course Detail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center bg-image mx-0 mb-5" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+            <div class="col-lg-6 py-5">
+                <div class="bg-white p-5 my-5">
+                    <h1 class="text-center mb-4">30% Off For New Students</h1>
+                    <form>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control bg-light border-0" placeholder="Your Name" style="padding: 30px 20px;">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control bg-light border-0" placeholder="Your Email" style="padding: 30px 20px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <select class="custom-select bg-light border-0 px-3" style="height: 60px;">
+                                        <option selected>Select A Course</option>
+                                        <option value="1">Web Development</option>
+                                        <option value="2">Data Science</option>
+                                        <option value="3">Business</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <button class="btn btn-primary btn-block" type="submit" style="height: 60px;">Sign Up Now</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Courses End -->
+
+    <!-- Team Start -->
+    <div id="team" class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative mb-5">
+                <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Instructors</h6>
+                <h1 class="display-4">Meet Our Instructors</h1>
+            </div>
+            <div class="owl-carousel team-carousel position-relative" style="padding: 0 30px;">
+                <div class="team-item">
+                    <img class="team-img img-fluid w-100" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Dr. Emily Johnson">
+                    <div class="team-social">
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                        <h5 class="mb-3">Dr. Emily Johnson</h5>
+                        <p class="mb-2">Computer Science & Programming</p>
+                        <div class="d-flex justify-content-center">
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-item">
+                    <img class="team-img img-fluid w-100" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Prof. Michael Chen">
+                    <div class="team-social">
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                        <h5 class="mb-3">Prof. Michael Chen</h5>
+                        <p class="mb-2">Data Science & Analytics</p>
+                        <div class="d-flex justify-content-center">
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-item">
+                    <img class="team-img img-fluid w-100" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Dr. Sarah Williams">
+                    <div class="team-social">
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                        <h5 class="mb-3">Dr. Sarah Williams</h5>
+                        <p class="mb-2">Business Administration</p>
+                        <div class="d-flex justify-content-center">
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-item">
+                    <img class="team-img img-fluid w-100" src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Prof. David Brown">
+                    <div class="team-social">
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="bg-light text-center p-4">
+                        <h5 class="mb-3">Prof. David Brown</h5>
+                        <p class="mb-2">Graphic Design & Arts</p>
+                        <div class="d-flex justify-content-center">
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+
+    <!-- Testimonial Start -->
+    <div id="testimonial" class="container-fluid bg-image py-5" style="margin: 90px 0; background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <div class="section-title position-relative mb-4">
+                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Testimonial</h6>
+                        <h1 class="display-4 text-white">What Say Our Students</h1>
+                    </div>
+                    <p class="m-0 text-white">Our students' success is our greatest achievement. Read what they have to say about their learning experience with Sypher.Education and how our courses have helped them achieve their personal and professional goals.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="owl-carousel testimonial-carousel">
+                        <div class="bg-white p-5">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <p>"The web development course completely transformed my career. I went from knowing nothing about coding to landing a job as a junior developer in just 6 months. The instructors were incredibly supportive and the curriculum was comprehensive."</p>
+                            <div class="d-flex flex-shrink-0 align-items-center mt-4">
+                                <img class="testimonial-img img-fluid mr-4" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Alex Thompson">
+                                <div>
+                                    <h5>Alex Thompson</h5>
+                                    <span>Web Development</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <p>"I've taken several data science courses, but this one stands out for its practical approach. The projects were challenging and relevant to real-world problems. The certificate I earned helped me get a promotion at work."</p>
+                            <div class="d-flex flex-shrink-0 align-items-center mt-4">
+                                <img class="testimonial-img img-fluid mr-4" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Maria Rodriguez">
+                                <div>
+                                    <h5>Maria Rodriguez</h5>
+                                    <span>Data Science</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial Start -->
+
+    <!-- Contact Start -->
+    <div id="contact" class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <div class="bg-light d-flex flex-column justify-content-center px-5" style="height: 450px;">
+                        <div class="d-flex align-items-center mb-5">
+                            <div class="btn-icon bg-primary mr-4">
+                                <i class="fa fa-2x fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div class="mt-n1">
+                                <h4>Our Location</h4>
+                                <p class="m-0">123 Education Street, New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-5">
+                            <div class="btn-icon bg-secondary mr-4">
+                                <i class="fa fa-2x fa-phone-alt text-white"></i>
+                            </div>
+                            <div class="mt-n1">
+                                <h4>Call Us</h4>
+                                <p class="m-0">+1 234 567 8900</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="btn-icon bg-warning mr-4">
+                                <i class="fa fa-2x fa-envelope text-white"></i>
+                            </div>
+                            <div class="mt-n1">
+                                <h4>Email Us</h4>
+                                <p class="m-0">info@sypher.education</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="section-title position-relative mb-4">
+                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Need Help?</h6>
+                        <h1 class="display-4">Send Us A Message</h1>
+                    </div>
+                    <div class="contact-form">
+                        <form>
+                            <div class="row">
+                                <div class="col-6 form-group">
+                                    <input type="text" class="form-control border-top-0 border-right-0 border-left-0 p-0" placeholder="Your Name" required="required">
+                                </div>
+                                <div class="col-6 form-group">
+                                    <input type="email" class="form-control border-top-0 border-right-0 border-left-0 p-0" placeholder="Your Email" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control border-top-0 border-right-0 border-left-0 p-0" placeholder="Subject" required="required">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control border-top-0 border-right-0 border-left-0 p-0" rows="5" placeholder="Message" required="required"></textarea>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary py-3 px-5" type="submit">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid position-relative overlay-top bg-dark text-white-50 py-5" style="margin-top: 90px;">
+        <div class="container mt-5 pt-5">
+            <div class="row">
+                <div class="col-md-6 mb-5">
+                    <a href="index.html" class="navbar-brand">
+                        <h1 class="mt-n2 text-uppercase text-white"><i class="fa fa-graduation-cap mr-3"></i>Sypher.Education</h1>
+                    </a>
+                    <p class="m-0">Sypher.Education is dedicated to providing high-quality online education to students worldwide. Our mission is to make learning accessible, engaging, and effective for everyone.</p>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <h3 class="text-white mb-4">Newsletter</h3>
+                    <div class="w-100">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Your Email Address">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary px-4">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <h3 class="text-white mb-4">Get In Touch</h3>
+                    <p><i class="fa fa-map-marker-alt mr-2"></i>123 Education Street, New York, USA</p>
+                    <p><i class="fa fa-phone-alt mr-2"></i>+1 234 567 8900</p>
+                    <p><i class="fa fa-envelope mr-2"></i>info@sypher.education</p>
+                    <div class="d-flex justify-content-start mt-4">
+                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-twitter"></i></a>
+                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-facebook-f"></i></a>
+                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-linkedin-in"></i></a>
+                        <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h3 class="text-white mb-4">Our Courses</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Web Design</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Apps Design</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Marketing</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Research</a>
+                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>SEO</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h3 class="text-white mb-4">Quick Links</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Privacy Policy</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Terms & Condition</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Regular FAQs</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Help & Support</a>
+                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark text-white-50 border-top py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                    <p class="m-0">Copyright &copy; <a class="text-white" href="#">Sypher.Education</a>. All Rights Reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <p class="m-0">Designed by <a class="text-white" href="https://htmlcodex.com">HTML Codex</a> Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script>
+        (function($) {
+            "use strict";
+            
+            // Back to top button
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 200) {
+                    $('.back-to-top').fadeIn('slow');
+                } else {
+                    $('.back-to-top').fadeOut('slow');
+                }
+            });
+            $('.back-to-top').click(function () {
+                $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+                return false;
+            });
+            
+            // Counter Up
+            $('.counter-up').counterUp({
+                delay: 10,
+                time: 2000
+            });
+            
+            // Courses carousel
+            $(".courses-carousel").owlCarousel({
+                autoplay: true,
+                smartSpeed: 1500,
+                loop: true,
+                dots: false,
+                nav : false,
+                responsive: {
+                    0:{
+                        items:1
+                    },
+                    576:{
+                        items:1
+                    },
+                    768:{
+                        items:2
+                    },
+                    992:{
+                        items:3
+                    }
+                }
+            });
+            
+            // Team carousel
+            $(".team-carousel").owlCarousel({
+                autoplay: true,
+                smartSpeed: 1000,
+                margin: 30,
+                dots: false,
+                loop: true,
+                nav : true,
+                navText : [
+                    '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+                    '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+                ],
+                responsive: {
+                    0:{
+                        items:1
+                    },
+                    576:{
+                        items:1
+                    },
+                    768:{
+                        items:2
+                    },
+                    992:{
+                        items:3
+                    }
+                }
+            });
+            
+            // Testimonial carousel
+            $(".testimonial-carousel").owlCarousel({
+                autoplay: true,
+                smartSpeed: 1000,
+                items: 1,
+                dots: true,
+                loop: true,
+                nav: false
+            });
+            
+            // Dropdown on mouse hover
+            const $dropdown = $(".dropdown");
+            const $dropdownToggle = $(".dropdown-toggle");
+            const $dropdownMenu = $(".dropdown-menu");
+            const showClass = "show";
+            
+            $(window).on("load resize", function() {
+                if (this.matchMedia("(min-width: 992px)").matches) {
+                    $dropdown.hover(
+                        function() {
+                            const $this = $(this);
+                            $this.addClass(showClass);
+                            $this.find($dropdownToggle).attr("aria-expanded", "true");
+                            $this.find($dropdownMenu).addClass(showClass);
+                        },
+                        function() {
+                            const $this = $(this);
+                            $this.removeClass(showClass);
+                            $this.find($dropdownToggle).attr("aria-expanded", "false");
+                            $this.find($dropdownMenu).removeClass(showClass);
+                        }
+                    );
+                } else {
+                    $dropdown.off("mouseenter mouseleave");
+                }
+            });
+        })(jQuery);
+    </script>
+</body>
+</html>
