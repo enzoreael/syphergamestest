@@ -60,7 +60,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      padding: 32px 20px;
+      padding: 32px 20px 60px 20px;
       min-height: 100vh;
       transition: background 0.3s, color 0.3s;
     }
@@ -112,7 +112,7 @@
 
     /* Recently Played Section */
     .section {
-      margin-bottom: 48px;
+      margin-bottom: 56px;
       display: none;
     }
 
@@ -123,15 +123,23 @@
     .section-title {
       font-size: 28px;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       letter-spacing: -0.5px;
+    }
+
+    .scroll-wrapper {
+      position: relative;
+      overflow: visible;
+      padding: 8px 20px 8px 20px;
     }
 
     .horizontal-scroll {
       display: flex;
       gap: 16px;
       overflow-x: auto;
-      padding-bottom: 16px;
+      overflow-y: visible;
+      padding: 8px 8px 16px 8px;
+      scroll-behavior: smooth;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
@@ -140,18 +148,66 @@
       display: none;
     }
 
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] .scroll-btn {
+      background: rgba(28, 28, 30, 0.9);
+    }
+
+    .scroll-wrapper:hover .scroll-btn.visible {
+      display: flex;
+    }
+
+    .scroll-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(139, 122, 255, 0.3);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .scroll-btn:hover svg {
+      stroke: white;
+    }
+
+    .scroll-btn.left {
+      left: -22px;
+    }
+
+    .scroll-btn.right {
+      right: -22px;
+    }
+
+    .scroll-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text);
+      transition: stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     /* Categories */
     .categories {
       display: flex;
       gap: 12px;
-      margin-bottom: 36px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      scrollbar-width: none;
-    }
-
-    .categories::-webkit-scrollbar {
-      display: none;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      padding: 4px 0;
     }
 
     .category-btn {
@@ -164,7 +220,7 @@
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.3s;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -173,6 +229,7 @@
     .category-btn:hover {
       border-color: var(--primary);
       color: var(--text);
+      transform: translateY(-2px);
     }
 
     .category-btn.active {
@@ -180,6 +237,7 @@
       color: white;
       border-color: var(--primary);
       box-shadow: 0 4px 12px rgba(139, 122, 255, 0.3);
+      transform: translateY(-2px);
     }
 
     .heart-icon {
@@ -191,30 +249,43 @@
     /* Games Grid */
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .games-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Game Card */
     .game-card {
       position: relative;
-      height: 340px;
+      aspect-ratio: 16 / 9;
+      overflow: visible;
+      cursor: pointer;
+    }
+
+    .game-card .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
       border-radius: var(--radius);
       background: var(--card-bg);
       border: 1px solid var(--border);
       overflow: hidden;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: var(--shadow);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease;
     }
 
-    .game-card:hover {
-      transform: translateY(-6px);
+    .game-card:hover .card-inner {
+      transform: translateY(-8px) scale(1.02);
       box-shadow: var(--shadow-hover);
       border-color: var(--primary);
     }
 
-    .game-card::before {
+    .game-card .card-inner::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -227,11 +298,13 @@
       inset: 0;
       background-size: cover;
       background-position: center;
-      transition: transform 0.4s;
+      filter: blur(2px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .game-card:hover .game-bg {
-      transform: scale(1.08);
+      filter: blur(0px);
+      transform: scale(1.05);
     }
 
     .game-content {
@@ -327,22 +400,34 @@
 
     /* Horizontal scroll card */
     .horizontal-card {
-      min-width: 320px;
-      height: 200px;
       position: relative;
-      border-radius: 16px;
-      overflow: hidden;
+      min-width: 320px;
+      height: 180px;
+      overflow: visible;
       cursor: pointer;
-      transition: all 0.3s;
+      z-index: 1;
+    }
+
+    .horizontal-card .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      overflow: hidden;
       box-shadow: var(--shadow);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease;
     }
 
-    .horizontal-card:hover {
-      transform: scale(1.03);
+    .horizontal-card:hover .card-inner {
+      transform: scale(1.05) translateY(-4px);
       box-shadow: var(--shadow-hover);
+      border-color: var(--primary);
+      z-index: 10;
     }
 
-    .horizontal-card::before {
+    .horizontal-card .card-inner::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -355,6 +440,13 @@
       inset: 0;
       background-size: cover;
       background-position: center;
+      filter: blur(2px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .horizontal-card:hover .game-bg {
+      filter: blur(0px);
+      transform: scale(1.05);
     }
 
     .horizontal-card .game-content {
@@ -373,6 +465,196 @@
 
     .horizontal-card .game-category {
       font-size: 12px;
+    }
+
+    .time-ago {
+      font-size: 11px;
+      color: var(--primary);
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    /* General Tab Styles */
+   .general-section {
+     margin-bottom: 48px;
+     overflow: hidden;
+    }
+
+   .general-title {
+     font-size: 24px;
+     font-weight: 700;
+     margin-bottom: 20px;
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     letter-spacing: -0.3px;
+    }
+
+   .carousel-wrapper {
+     overflow: hidden;
+     position: relative;
+     width: 100%;
+     padding: 16px 0;
+     margin: -16px 0;
+    }
+
+  .carousel-wrapper::before,
+  .carousel-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .carousel-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg), transparent);
+  }
+
+  .carousel-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg), transparent);
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 16px;
+    animation: slide 40s linear infinite;
+    width: max-content;
+  }
+
+  .carousel-wrapper:hover .carousel-track {
+    animation-play-state: paused;
+  }
+
+#popularGames.carousel-track {
+  animation: slide 55s linear infinite reverse;
+}
+
+.carousel-wrapper:hover #popularGames.carousel-track {
+  animation-play-state: paused;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.carousel-track .game-card {
+  flex-shrink: 0;
+  width: 280px;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: visible;
+}
+
+.carousel-track .game-card:hover {
+  z-index: 100;
+}
+    /* Pause completely only when hovering a card to prevent hover switching */
+    .carousel-wrapper:has(.game-card:hover) .carousel-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .carousel-track .game-card {
+      flex-shrink: 0;
+      width: 280px;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: visible;
+    }
+
+    .carousel-track .game-card:hover {
+      z-index: 100;
+    }
+
+    .view-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin: 32px auto;
+      display: flex;
+      box-shadow: 0 4px 12px rgba(139, 122, 255, 0.3);
+    }
+
+    .view-all-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 122, 255, 0.4);
+    }
+
+    .view-all-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* General Tab Styles */
+    .general-section {
+      margin-bottom: 48px;
+    }
+
+    .general-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .view-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin: 32px auto;
+      display: flex;
+      box-shadow: 0 4px 12px rgba(139, 122, 255, 0.3);
+    }
+
+    .view-all-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 122, 255, 0.4);
+    }
+
+    .view-all-btn svg {
+      width: 18px;
+      height: 18px;
     }
   </style>
 </head>
@@ -393,7 +675,19 @@
     <!-- Recently Played Section -->
     <div id="recentSection" class="section">
       <h2 class="section-title">Recently Played</h2>
-      <div id="recentlyPlayedScroll" class="horizontal-scroll"></div>
+      <div class="scroll-wrapper">
+        <button class="scroll-btn left" onclick="scrollRecent('left')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div id="recentlyPlayedScroll" class="horizontal-scroll"></div>
+        <button class="scroll-btn right" onclick="scrollRecent('right')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Categories -->
@@ -403,14 +697,42 @@
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
       </button>
-      <button class="category-btn active" data-category="all">All</button>
-      <button class="category-btn" data-category="Shooting">Shooting</button>
+      <button class="category-btn active" data-category="general">General</button>
+      <button class="category-btn" data-category="all">All</button>
       <button class="category-btn" data-category="Racing">Racing</button>
+      <button class="category-btn" data-category="Platformer">Platformer</button>
+      <button class="category-btn" data-category="Shooter">Shooter</button>
+      <button class="category-btn" data-category="Arcade">Arcade</button>
+      <button class="category-btn" data-category="Simulation">Simulation</button>
+      <button class="category-btn" data-category="Online">Online</button>
+      <button class="category-btn" data-category="Multiplayer">Multiplayer</button>
       <button class="category-btn" data-category="Sports">Sports</button>
       <button class="category-btn" data-category="Adventure">Adventure</button>
-      <button class="category-btn" data-category="Puzzle">Puzzle</button>
-      <button class="category-btn" data-category="Action">Action</button>
       <button class="category-btn" data-category="Horror">Horror</button>
+    </div>
+
+    <!-- General Tab Content -->
+    <div id="generalContent" style="display: none;">
+      <div class="general-section">
+        <h3 class="general-title">🔥 Trending</h3>
+        <div class="carousel-wrapper">
+          <div id="trendingGames" class="carousel-track"></div>
+        </div>
+      </div>
+      
+      <div class="general-section">
+        <h3 class="general-title">⭐ Popular</h3>
+        <div class="carousel-wrapper">
+          <div id="popularGames" class="carousel-track"></div>
+        </div>
+      </div>
+      
+      <button class="view-all-btn" onclick="switchToAllGames()">
+        <span>View All Games</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
     </div>
 
     <!-- Games Grid -->
@@ -423,88 +745,121 @@
     // Image should be placed in: public/images/games/your-image-name.jpg
     // ═══════════════════════════════════════════════════════════════
     const games = [
-      { name: "A Small World Cup", path: "/a-small-world-cup/", category: "Sports", image: "a-small-world-cup.jpg" },
-      { name: "Bitlife", path: "/bitlife/", category: "Adventure", image: "bitlife.jpg" },
-      { name: "BlockBlast", path: "/BlockBlast/", category: "Puzzle", image: "blockblast.jpg" },
-      { name: "Blockpost", path: "/blockpost/", category: "Shooting", image: "blockpost.jpg" },
-      { name: "Chrome Dino", path: "/chrome-dino/", category: "Action", image: "chrome-dino.jpg" },
-      { name: "Cookie Clicker", path: "/cookieclicker/", category: "Puzzle", image: "cookie-clicker.jpg" },
-      { name: "Crossy Road", path: "/crossyroad/", category: "Action", image: "crossy-road.jpg" },
+      // Racing
       { name: "Drift Boss", path: "/drift-boss/", category: "Racing", image: "drift-boss.jpg" },
       { name: "Drift Hunters", path: "/drift-hunters/", category: "Racing", image: "drift-hunters.jpg" },
       { name: "Drive Mad", path: "/drivemad/", category: "Racing", image: "drive-mad.jpg" },
-      { name: "Duck Life 1", path: "/ducklife1/", category: "Sports", image: "duck-life-1.jpg" },
-      { name: "Duck Life 2", path: "/ducklife2/", category: "Sports", image: "duck-life-2.jpg" },
-      { name: "Duck Life 3", path: "/ducklife3/", category: "Sports", image: "duck-life-3.jpg" },
-      { name: "Duck Life 4", path: "/ducklife4/", category: "Sports", image: "duck-life-4.jpg" },
-      { name: "Eggy Car", path: "/eggycar/", category: "Racing", image: "eggy-car.jpg" },
-      { name: "FNAF", path: "/fnaf/", category: "Horror", image: "fnaf.jpg" },
-      { name: "FNAF 2", path: "/fnaf2/", category: "Horror", image: "fnaf-2.jpg" },
-      { name: "FNAF 3", path: "/fnaf3/", category: "Horror", image: "fnaf-3.jpg" },
-      { name: "FNAF 4", path: "/fnaf4/", category: "Horror", image: "fnaf-4.jpg" },
-      { name: "Getaway Shootout", path: "/getaway-shootout/", category: "Shooting", image: "getaway-shootout.jpg" },
-      { name: "Google Snake", path: "/google-snake/", category: "Action", image: "google-snake.jpg" },
-      { name: "Hole IO", path: "/hole-io/", category: "Action", image: "hole-io.jpg" },
-      { name: "Level Devil 2 Poki", path: "/level-devil-2-poki/", category: "Adventure", image: "level-devil-2-poki.jpg" },
-      { name: "Level Devil Poki", path: "/level-devil-poki/", category: "Adventure", image: "level-devil-poki.jpg" },
-      { name: "Monkey Mart", path: "/monkeymart/", category: "Adventure", image: "monkey-mart.jpg" },
       { name: "Moto X3M", path: "/motox3m/", category: "Racing", image: "moto-x3m.jpg" },
       { name: "Moto X3M Pool", path: "/motox3m-pool/", category: "Racing", image: "moto-x3m-pool.jpg" },
       { name: "Moto X3M Spooky", path: "/motox3m-spooky/", category: "Racing", image: "moto-x3m-spooky.jpg" },
       { name: "Moto X3M Winter", path: "/motox3m-winter/", category: "Racing", image: "moto-x3m-winter.jpg" },
-      { name: "Paper IO 2", path: "/paperio2/", category: "Action", image: "paper-io-2.jpg" },
-      { name: "Rocket League", path: "/Rocket-League/", category: "Sports", image: "rocket-league.jpg" },
-      { name: "Rooftop Snipers", path: "/rooftop-snipers/", category: "Shooting", image: "rooftop-snipers.jpg" },
-      { name: "Slope", path: "/slope/", category: "Action", image: "slope.jpg" },
-      { name: "Slope 2", path: "/slope2/", category: "Action", image: "slope-2.jpg" },
-      { name: "Slope 3", path: "/slope3/", category: "Action", image: "slope-3.jpg" },
-      { name: "Snow Rider 3D", path: "/snowrider3d/", category: "Racing", image: "snow-rider-3d.jpg" },
-      { name: "Stickman Hook", path: "/stickman-hook/", category: "Action", image: "stickman-hook.jpg" },
-      { name: "Subway Surfers NY", path: "/subway-surfers-ny/", category: "Action", image: "subway-surfers-ny.jpg" },
-      { name: "Tank Trouble 2", path: "/tank-trouble-2/", category: "Shooting", image: "tank-trouble-2.jpg" },
-      { name: "Temple Run 2", path: "/temple-run-2/", category: "Adventure", image: "temple-run-2.jpg" },
-      { name: "Time Shooter 1", path: "/timeshooter1/", category: "Shooting", image: "time-shooter-1.jpg" },
-      { name: "Time Shooter 2", path: "/timeshooter2/", category: "Shooting", image: "time-shooter-2.jpg" },
-      { name: "Time Shooter 3", path: "/timeshooter3/", category: "Shooting", image: "time-shooter-3.jpg" },
-      { name: "Tiny Fishing", path: "/tinyfishing/", category: "Puzzle", image: "tiny-fishing.jpg" },
-      { name: "Tomb of the Mask Web", path: "/tomb-of-the-mask-web/", category: "Adventure", image: "tomb-of-the-mask-web.jpg" },
-      { name: "Zombs Royale", path: "/zombs-royale/", category: "Shooting", image: "zombs-royale.jpg" },
-      { name: "Super Mario 64", path: "/super-mario/", category: "Adventure", image: "super-mario-64.jpg" },
-      { name: "Sonic the Hedgehog Remastered", path: "/sonic-the-hedgehog-remastered/", category: "Action", image: "sonic-the-hedgehog-remastered.jpg" },
       { name: "Super Star Car", path: "/super-star-car/", category: "Racing", image: "super-star-car.jpg" },
-      { name: "Recoil", path: "/recoil/", category: "Shooting", image: "recoil.jpg" }
+      { name: "Snow Rider 3D", path: "/snowrider3d/", category: "Racing", image: "snow-rider-3d.jpg" },
+      { name: "Rocket League", path: "/Rocket-League/", category: "Racing", image: "rocket-league.jpg" },
+      
+      // Platformer
+      { name: "Super Mario 64", path: "/super-mario/", category: "Platformer", image: "super-mario-64.jpg" },
+      { name: "Sonic the Hedgehog Remastered", path: "/sonic-the-hedgehog-remastered/", category: "Platformer", image: "sonic-the-hedgehog-remastered.jpg" },
+      { name: "Tomb of the Mask Web", path: "/tomb-of-the-mask-web/", category: "Platformer", image: "tomb-of-the-mask-web.jpg" },
+      { name: "Level Devil Poki", path: "/level-devil-poki/", category: "Platformer", image: "level-devil-poki.jpg" },
+      { name: "Level Devil 2 Poki", path: "/level-devil-2-poki/", category: "Platformer", image: "level-devil-2-poki.jpg" },
+      
+      // Shooter
+      { name: "Time Shooter 1", path: "/timeshooter1/", category: "Shooter", image: "time-shooter-1.jpg" },
+      { name: "Time Shooter 2", path: "/timeshooter2/", category: "Shooter", image: "time-shooter-2.jpg" },
+      { name: "Time Shooter 3", path: "/timeshooter3/", category: "Shooter", image: "time-shooter-3.jpg" },
+      { name: "Recoil", path: "/recoil/", category: "Shooter", image: "recoil.jpg" },
+      { name: "Rooftop Snipers", path: "/rooftop-snipers/", category: "Shooter", image: "rooftop-snipers.jpg" },
+      { name: "Getaway Shootout", path: "/getaway-shootout/", category: "Shooter", image: "getaway-shootout.jpg" },
+      
+      // Arcade
+      { name: "Slope", path: "/slope/", category: "Arcade", image: "slope.jpg" },
+      { name: "Slope 2", path: "/slope2/", category: "Arcade", image: "slope-2.jpg" },
+      { name: "Slope 3", path: "/slope3/", category: "Arcade", image: "slope-3.jpg" },
+      { name: "Chrome Dino", path: "/chrome-dino/", category: "Arcade", image: "chrome-dino.jpg" },
+      { name: "Google Snake", path: "/google-snake/", category: "Arcade", image: "google-snake.jpg" },
+      { name: "Stickman Hook", path: "/stickman-hook/", category: "Arcade", image: "stickman-hook.jpg" },
+      { name: "Crossy Road", path: "/crossyroad/", category: "Arcade", image: "crossy-road.jpg" },
+      { name: "Hole IO", path: "/hole-io/", category: "Arcade", image: "hole-io.jpg" },
+      { name: "Paper IO 2", path: "/paperio2/", category: "Arcade", image: "paper-io-2.jpg" },
+      
+      // Simulation
+      { name: "Bitlife", path: "/bitlife/", category: "Simulation", image: "bitlife.jpg" },
+      { name: "Cookie Clicker", path: "/cookieclicker/", category: "Simulation", image: "cookie-clicker.jpg" },
+      { name: "Monkey Mart", path: "/monkeymart/", category: "Simulation", image: "monkey-mart.jpg" },
+      { name: "Tiny Fishing", path: "/tinyfishing/", category: "Simulation", image: "tiny-fishing.jpg" },
+      
+      // Online
+      { name: "Minecraft 1.12.2", path: "/minecraft/", category: "Online", image: "minecraft.jpg" },
+      { name: "Among Us Online", path: "/among-us/", category: "Online", image: "among-us.jpg" },
+      { name: "Blockpost", path: "/blockpost/", category: "Online", image: "blockpost.jpg" },
+      
+      // Multiplayer
+      { name: "Zombs Royale", path: "/zombs-royale/", category: "Multiplayer", image: "zombs-royale.jpg" },
+      { name: "Tank Trouble 2", path: "/tank-trouble-2/", category: "Multiplayer", image: "tank-trouble-2.jpg" },
+      
+      // Sports
+      { name: "A Small World Cup", path: "/a-small-world-cup/", category: "Sports", image: "a-small-world-cup.jpg" },
+      
+      // Adventure
+      { name: "Duck Life 1", path: "/ducklife1/", category: "Adventure", image: "duck-life-1.jpg" },
+      { name: "Duck Life 2", path: "/ducklife2/", category: "Adventure", image: "duck-life-2.jpg" },
+      { name: "Duck Life 3", path: "/ducklife3/", category: "Adventure", image: "duck-life-3.jpg" },
+      { name: "Duck Life 4", path: "/ducklife4/", category: "Adventure", image: "duck-life-4.jpg" },
+      { name: "Eggy Car", path: "/eggycar/", category: "Adventure", image: "eggy-car.jpg" },
+      { name: "Subway Surfers NY", path: "/subway-surfers-ny/", category: "Adventure", image: "subway-surfers-ny.jpg" },
+      { name: "Temple Run 2", path: "/temple-run-2/", category: "Adventure", image: "temple-run-2.jpg" },
+
+      // Horror
+      { name: "FNAF", path: "/fnaf/", category: "Horror", image: "fnaf.jpg" },
+      { name: "FNAF 2", path: "/fnaf2/", category: "Horror", image: "fnaf-2.jpg" },
+      { name: "FNAF 3", path: "/fnaf3/", category: "Horror", image: "fnaf-3.jpg" },
+      { name: "FNAF 4", path: "/fnaf4/", category: "Horror", image: "fnaf-4.jpg" },
     ];
 
     const gamesGrid = document.getElementById('gamesGrid');
+    const generalContent = document.getElementById('generalContent');
+    const trendingGames = document.getElementById('trendingGames');
+    const popularGames = document.getElementById('popularGames');
     const searchInput = document.getElementById('searchInput');
     const recentSection = document.getElementById('recentSection');
     const recentlyPlayedScroll = document.getElementById('recentlyPlayedScroll');
     
-    let currentCategory = 'all';
+    let currentCategory = 'general';
     let favorites = JSON.parse(localStorage.getItem('gameFavorites') || '[]');
     let recentlyPlayed = JSON.parse(localStorage.getItem('recentlyPlayed') || '[]');
+    
+    // Trending and Popular game lists
+    const trendingGameNames = ['Minecraft 1.12.2', 'Among Us Online', 'Slope', 'Drift Hunters', 'Monkey Mart', 'Blockpost', 'Cookie Clicker', 'Tomb of the Mask', 'Recoil'];
+    const popularGameNames = ['Slope', 'Drift Hunters', 'FNAF', 'Moto X3M', 'Zombs Royale', 'Bitlife', 'Drift Boss', 'Google Snake', 'Level Devil', 'Stickman Hook', 'Time Shooter'];
 
     // Create game card
-    function createGameCard(game, isHorizontal = false) {
+    function createGameCard(game, isHorizontal = false, timestamp = null) {
       const isFav = favorites.includes(game.name);
       
       const card = document.createElement('div');
       card.className = isHorizontal ? 'horizontal-card' : 'game-card';
+      if (timestamp) card.dataset.timestamp = timestamp;
       
-      const bgImage = `/images/games/${game.image}`;
+      const bgImage = `images/games/${game.image}`;
+      
+      const timeAgoHtml = timestamp ? `<p class="time-ago" data-timestamp="${timestamp}">Played ${formatTimeAgo(timestamp)}</p>` : '';
       
       card.innerHTML = `
-        <div class="game-bg" style="background-image: url('${bgImage}')"></div>
-        ${!isHorizontal ? `
-          <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${game.name}')">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-          </button>
-        ` : ''}
-        <div class="game-content">
-          <h3 class="game-name">${game.name}</h3>
-          <p class="game-category">${game.category}</p>
+        <div class="card-inner">
+          <div class="game-bg" style="background-image: url('${bgImage}')"></div>
+          ${!isHorizontal ? `
+            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${game.name}')">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          ` : ''}
+          <div class="game-content">
+            <h3 class="game-name">${game.name}</h3>
+            <p class="game-category">${game.category}</p>
+            ${timeAgoHtml}
+          </div>
         </div>
       `;
       
@@ -516,6 +871,38 @@
       
       return card;
     }
+
+    // Format time ago
+    function formatTimeAgo(timestamp) {
+      const now = Date.now();
+      const diff = Math.floor((now - timestamp) / 1000); // difference in seconds
+      
+      if (diff < 60) return `${diff} second${diff !== 1 ? 's' : ''} ago`;
+      
+      const minutes = Math.floor(diff / 60);
+      if (minutes < 60) return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+      
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) {
+        const remainingMinutes = minutes % 60;
+        return `${hours}h ${remainingMinutes}m ago`;
+      }
+      
+      const days = Math.floor(hours / 24);
+      const remainingHours = hours % 24;
+      return `${days}d ${remainingHours}h ago`;
+    }
+
+    // Update all time ago displays
+    function updateTimeAgoDisplays() {
+      document.querySelectorAll('.time-ago').forEach(el => {
+        const timestamp = parseInt(el.dataset.timestamp);
+        el.textContent = `Played ${formatTimeAgo(timestamp)}`;
+      });
+    }
+
+    // Update time displays every second
+    setInterval(updateTimeAgoDisplays, 1000);
 
     // Toggle favorite
     function toggleFavorite(event, gameName) {
@@ -549,12 +936,13 @@
 
     // Play game
     function playGame(game) {
-      // Add to recently played
+      // Add to recently played with timestamp
+      const timestamp = Date.now();
       const index = recentlyPlayed.findIndex(g => g.name === game.name);
       if (index > -1) {
         recentlyPlayed.splice(index, 1);
       }
-      recentlyPlayed.unshift(game);
+      recentlyPlayed.unshift({ ...game, timestamp });
       recentlyPlayed = recentlyPlayed.slice(0, 10);
       localStorage.setItem('recentlyPlayed', JSON.stringify(recentlyPlayed));
       
@@ -577,6 +965,61 @@
       });
     }
 
+    // Display general tab
+    function displayGeneralTab() {
+      generalContent.style.display = 'block';
+      gamesGrid.style.display = 'none';
+      
+      // Display trending games with duplicates for seamless loop
+      trendingGames.innerHTML = '';
+      const trendingCardsHTML = [];
+      trendingGameNames.forEach(name => {
+        const game = games.find(g => g.name === name);
+        if (game) {
+          trendingCardsHTML.push(createGameCard(game).outerHTML);
+        }
+      });
+      // Duplicate the cards for seamless infinite scroll
+      trendingGames.innerHTML = trendingCardsHTML.join('') + trendingCardsHTML.join('');
+      
+      // Display popular games with duplicates for seamless loop
+      popularGames.innerHTML = '';
+      const popularCardsHTML = [];
+      popularGameNames.forEach(name => {
+        const game = games.find(g => g.name === name);
+        if (game) {
+          popularCardsHTML.push(createGameCard(game).outerHTML);
+        }
+      });
+      // Duplicate the cards for seamless infinite scroll
+      popularGames.innerHTML = popularCardsHTML.join('') + popularCardsHTML.join('');
+      
+      // Re-attach click events to all carousel cards
+      document.querySelectorAll('.carousel-track .game-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const gameName = card.querySelector('.game-name').textContent;
+          const game = games.find(g => g.name === gameName);
+          if (game) playGame(game);
+        });
+      });
+    }
+
+    // Hide general tab
+    function hideGeneralTab() {
+      generalContent.style.display = 'none';
+      gamesGrid.style.display = 'grid';
+    }
+
+    // Switch to all games
+    function switchToAllGames() {
+      document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-category="all"]').classList.add('active');
+      currentCategory = 'all';
+      searchInput.value = '';
+      hideGeneralTab();
+      displayGames(getFilteredGames());
+    }
+
     // Display recently played
     function displayRecentlyPlayed() {
       if (recentlyPlayed.length === 0) {
@@ -587,14 +1030,45 @@
       recentSection.classList.add('show');
       recentlyPlayedScroll.innerHTML = '';
       
-      recentlyPlayed.forEach(game => {
-        recentlyPlayedScroll.appendChild(createGameCard(game, true));
+      recentlyPlayed.forEach(gameData => {
+        const game = games.find(g => g.name === gameData.name) || gameData;
+        const timestamp = gameData.timestamp || Date.now();
+        recentlyPlayedScroll.appendChild(createGameCard(game, true, timestamp));
       });
+      
+      // Update scroll button visibility
+      updateScrollButtons();
+    }
+
+    // Update scroll button visibility
+    function updateScrollButtons() {
+      const scroll = recentlyPlayedScroll;
+      const leftBtn = document.querySelector('.scroll-btn.left');
+      const rightBtn = document.querySelector('.scroll-btn.right');
+      
+      if (!scroll || !leftBtn || !rightBtn) return;
+      
+      const canScrollLeft = scroll.scrollLeft > 0;
+      const canScrollRight = scroll.scrollLeft < scroll.scrollWidth - scroll.clientWidth - 1;
+      
+      if (canScrollLeft) {
+        leftBtn.classList.add('visible');
+      } else {
+        leftBtn.classList.remove('visible');
+      }
+      
+      if (canScrollRight) {
+        rightBtn.classList.add('visible');
+      } else {
+        rightBtn.classList.remove('visible');
+      }
     }
 
     // Get filtered games
     function getFilteredGames() {
-      if (currentCategory === 'all') {
+      if (currentCategory === 'general') {
+        return [];
+      } else if (currentCategory === 'all') {
         return games;
       } else if (currentCategory === 'favorites') {
         return games.filter(g => favorites.includes(g.name));
@@ -606,6 +1080,15 @@
     // Search functionality
     searchInput.addEventListener('input', (e) => {
       const searchTerm = e.target.value.toLowerCase();
+      
+      if (currentCategory === 'general') {
+        // Switch to all category when searching from general
+        hideGeneralTab();
+        currentCategory = 'all';
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-category="all"]').classList.add('active');
+      }
+      
       const filtered = getFilteredGames().filter(g => 
         g.name.toLowerCase().includes(searchTerm)
       );
@@ -620,12 +1103,37 @@
         
         currentCategory = btn.dataset.category;
         searchInput.value = '';
-        displayGames(getFilteredGames());
+        
+        if (currentCategory === 'general') {
+          displayGeneralTab();
+        } else {
+          hideGeneralTab();
+          displayGames(getFilteredGames());
+        }
       });
     });
 
+    // Scroll recently played
+    function scrollRecent(direction) {
+      const scrollAmount = 340;
+      const scroll = recentlyPlayedScroll;
+      if (direction === 'left') {
+        scroll.scrollLeft -= scrollAmount;
+      } else {
+        scroll.scrollLeft += scrollAmount;
+      }
+      
+      // Update buttons after scroll animation completes
+      setTimeout(updateScrollButtons, 350);
+    }
+
+    // Listen for scroll events to update buttons
+    if (recentlyPlayedScroll) {
+      recentlyPlayedScroll.addEventListener('scroll', updateScrollButtons);
+    }
+
     // Initialize
-    displayGames(games);
+    displayGeneralTab();
     displayRecentlyPlayed();
   </script>
 </body>
